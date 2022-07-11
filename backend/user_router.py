@@ -29,5 +29,9 @@ def create_user(user: schemas.UserCreate):
     return db_user
 
 
-# @user_router.post('/Login')
-# def login()
+@user_router.delete("/User/{user_id}", status_code=204)
+def remove_user(user_id: int) -> None:
+    remove_user = session.query(models.User).filter(models.User.id == user_id).first()
+    session.delete(remove_user)
+    session.commit()    
+    return remove_user
